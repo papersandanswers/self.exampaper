@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paper Management System</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f1f5f9;
+    color: #172554;
+}
+
+header {
+    background: #172554;
+    color: white;
+    padding: 22px 16px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 23px;
+}
+
+header p {
+    margin-bottom: 0;
+    color: #dbeafe;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 16px;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+button {
+    padding: 11px 14px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+nav button {
+    background: white;
+    color: #172554;
+    border: 1px solid #cbd5e1;
+}
+
+nav button.active {
+    background: #2563eb;
+    color: white;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 7px #00000008;
+}
+
+.stat-number {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.stat-label {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.menu button {
+    background: white;
+    color: #172554;
+    border: 1px solid #dbe3ef;
+    text-align: left;
+    min-height: 105px;
+    line-height: 1.5;
+}
+
+.menu strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.menu span {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+h2 {
+    font-size: 21px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 12px 0 5px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 15px;
+    background: white;
+}
+
+textarea {
+    min-height: 90px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.item {
+    border: 1px solid #dbe3ef;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+    overflow-wrap: anywhere;
+}
+
+.small {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.notice {
+    background: #eff6ff;
+    padding: 12px;
+    border-radius: 8px;
+    color: #1e40af;
+    margin: 12px 0;
+}
+
+.warning {
+    background: #fff7ed;
+    padding: 12px;
+    border-radius: 8px;
+    color: #9a3412;
+    margin: 12px 0;
+}
+
+@media(max-width:700px) {
+    .stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .menu {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+}
+
+@media(max-width:380px) {
+    .menu {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>📘 Paper Management System</h1>
+    <p>Question Papers | Answer Keys | Model Answers</p>
+</header>
+
+<main>
+
+<nav>
+    <button class="active" onclick="showPage('dashboard',this)">
+        Dashboard
+    </button>
+
+    <button onclick="showPage('bank',this)">
+        Question Bank
+    </button>
+
+    <button onclick="showPage('maker',this)">
+        Paper Maker
+    </button>
+
+    <button onclick="showPage('papers',this)">
+        Saved Papers
+    </button>
+
+    <button onclick="showPage('customers',this)">
+        Customers
+    </button>
+
+    <button onclick="showPage('orders',this)">
+        Orders & Payments
+    </button>
+</nav>
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="page active">
+
+    <h2>Dashboard</h2>
+
+    <div class="stats">
+
+        <div class="card">
+            <div class="stat-label">Papers Created Today</div>
+            <div class="stat-number" id="todayPapers">0</div>
+        </div>
+
+        <div class="card">
+            <div class="stat-label">Total Papers</div>
+            <div class="stat-number" id="totalPapers">0</div>
+        </div>
+
+        <div class="card">
+            <div class="stat-label">Questions Added Today</div>
+            <div class="stat-number" id="todayQuestions">0</div>
+        </div>
+
+        <div class="card">
+            <div class="stat-label">Total Questions</div>
+            <div class="stat-number" id="totalQuestions">0</div>
+        </div>
+
+    </div>
+
+    <h2>Management Sections</h2>
+
+    <div class="menu">
+
+        <button onclick="showPage('maker')">
+            📝
+            <strong>Question Paper Maker</strong>
+            <span>Create papers manually or with AI assistance.</span>
+        </button>
+
+        <button onclick="showPage('bank')">
+            📚
+            <strong>Question Bank</strong>
+            <span>Store questions for future papers.</span>
+        </button>
+
+        <button onclick="showPage('papers')">
+            📄
+            <strong>Saved Papers</strong>
+            <span>View and download question papers.</span>
+        </button>
+
+        <button onclick="showPage('customers')">
+            🏫
+            <strong>Schools & Tuition</strong>
+            <span>Manage customer information.</span>
+        </button>
+
+        <button onclick="showPage('orders')">
+            💰
+            <strong>Orders & Payments</strong>
+            <span>Record orders and payment status.</span>
+        </button>
+
+        <button onclick="showPage('maker')">
+            🤖
+            <strong>AI Paper Maker</strong>
+            <span>Choose a question source for each paper.</span>
+        </button>
+
+    </div>
+
+    <div class="notice">
+        Online database connection and live AI generation will be
+        configured in the next steps.
+    </div>
+
+</section>
+
+<!-- QUESTION BANK -->
+
+<section id="bank" class="page">
+
+    <h2>Question Bank</h2>
+
+    <div class="card">
+
+        <form id="questionForm">
+
+            <div class="form-grid">
+
+                <div>
+                    <label>Board</label>
+                    <input id="qBoard" placeholder="Maharashtra State Board">
+                </div>
+
+                <div>
+                    <label>Class</label>
+                    <input id="qClass" placeholder="10th" required>
+                </div>
+
+                <div>
+                    <label>Subject</label>
+                    <input id="qSubject" placeholder="Science I" required>
+                </div>
+
+                <div>
+                    <label>Medium</label>
+                    <input id="qMedium" placeholder="English">
+                </div>
+
+                <div>
+                    <label>Chapter</label>
+                    <input id="qChapter" placeholder="Chapter 1">
+                </div>
+
+                <div>
+                    <label>Marks</label>
+                    <input id="qMarks" type="number" min="0"
+                           step="0.5" value="1" required>
+                </div>
+
+                <div class="full">
+                    <label>Question</label>
+                    <textarea id="qText"
+                              placeholder="Enter the exact question"
+                              required></textarea>
+                </div>
+
+                <div class="full">
+                    <label>Answer (optional)</label>
+                    <textarea id="qAnswer"
+                              placeholder="Enter the answer"></textarea>
+                </div>
+
+            </div>
+
+            <p>
+                <button type="submit">Save Question</button>
+            </p>
+
+        </form>
+
+    </div>
+
+    <div id="questionList"></div>
+
+</section>
+
+<!-- PAPER MAKER -->
+
+<section id="maker" class="page">
+
+    <h2>Question Paper Maker</h2>
+
+    <div class="card">
+
+        <form id="paperForm">
+
+            <div class="form-grid">
+
+                <div>
+                    <label>Paper Title</label>
+                    <input id="pTitle"
+                           placeholder="Science Unit Test"
+                           required>
+                </div>
+
+                <div>
+                    <label>Board</label>
+                    <input id="pBoard"
+                           placeholder="Maharashtra State Board">
+                </div>
+
+                <div>
+                    <label>Class</label>
+                    <input id="pClass" placeholder="10th" required>
+                </div>
+
+                <div>
+                    <label>Subject</label>
+                    <input id="pSubject" placeholder="Science I" required>
+                </div>
+
+                <div>
+                    <label>Medium</label>
+                    <input id="pMedium" placeholder="English">
+                </div>
+
+                <div>
+                    <label>Exam Type</label>
+                    <input id="pExam" placeholder="Unit Test">
+                </div>
+
+                <div>
+                    <label>Total Marks</label>
+                    <input id="pMarks" type="number"
+                           min="1" value="40" required>
+                </div>
+
+                <div>
+                    <label>Duration</label>
+                    <input id="pDuration" placeholder="2 Hours">
+                </div>
+
+                <div class="full">
+                    <label>Syllabus / Chapters</label>
+                    <textarea id="pSyllabus"
+                              placeholder="Enter chapters and syllabus"></textarea>
+                </div>
+
+                <div class="full">
+                    <label>Question Paper Pattern</label>
+                    <textarea id="pPattern"
+                              placeholder="Q.1 (A) MCQs — 5 marks&#10;Q.1 (B) Short answers — 5 marks"
+                              required></textarea>
+                </div>
+
+                <div class="full">
+                    <label>Question Source</label>
+
+                    <select id="pSource">
+                        <option value="bank">
+                            A — Question Bank Only
+                        </option>
+
+                        <option value="ai">
+                            B — AI-Generated Questions
+                        </option>
+
+                        <option value="both" selected>
+                            C — Both Combined
+                        </option>
+                    </select>
+                </div>
+
+                <div class="full">
+                    <label>AI-Generated Questions</label>
+                    <textarea id="aiQuestions"
+                              placeholder="Paste or enter AI-generated questions here. One question per line."></textarea>
+                </div>
+
+            </div>
+
+            <div class="warning">
+                Live AI generation is not connected yet. You can enter
+                AI-generated questions here for now. We will configure
+                the secure AI connection separately.
+            </div>
+
+            <button type="button" onclick="buildPaper()">
+                Build Question Paper
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="card">
+        <h3>Select Questions from Question Bank</h3>
+        <div id="paperQuestionChoices"></div>
+    </div>
+
+    <div id="preview"></div>
+
+</section>
+
+<!-- SAVED PAPERS -->
+
+<section id="papers" class="page">
+
+    <h2>Saved Question Papers</h2>
+    <div id="paperList"></div>
+
+</section>
+
+<!-- CUSTOMERS -->
+
+<section id="customers" class="page">
+
+    <h2>Schools & Tuition</h2>
+
+    <div class="card">
+
+        <form id="customerForm">
+
+            <label>School / Tuition Name</label>
+            <input id="cName" required>
+
+            <label>Contact Person</label>
+            <input id="cPerson">
+
+            <label>Phone</label>
+            <input id="cPhone" inputmode="tel">
+
+            <label>Email</label>
+            <input id="cEmail" type="email">
+
+            <p>
+                <button type="submit">Save Customer</button>
+            </p>
+
+        </form>
+
+    </div>
+
+    <div id="customerList"></div>
+
+</section>
+
+<!-- ORDERS -->
+
+<section id="orders" class="page">
+
+    <h2>Orders & Payments</h2>
+
+    <div class="card">
+
+        <form id="orderForm">
+
+            <label>Customer Name</label>
+            <input id="oCustomer" required>
+
+            <label>Order Details</label>
+            <input id="oDetails"
+                   placeholder="Class 8 Science — 4 papers"
+                   required>
+
+            <label>Amount (₹)</label>
+            <input id="oAmount" type="number" min="0" required>
+
+            <label>Payment Status</label>
+            <select id="oStatus">
+                <option>Unpaid</option>
+                <option>Partially Paid</option>
+                <option>Paid</option>
+            </select>
+
+            <p>
+                <button type="submit">Save Order</button>
+            </p>
+
+        </form>
+
+    </div>
+
+    <div id="orderList"></div>
+
+</section>
+
+</main>
+
+<script>
+const KEY = "pms_starter_data";
+
+let data = JSON.parse(localStorage.getItem(KEY) || "null") || {
+    questions: [],
+    papers: [],
+    customers: [],
+    orders: []
+};
+
+function save() {
+    localStorage.setItem(KEY, JSON.stringify(data));
+    renderAll();
+}
+
+function today() {
+    const d = new Date();
+    return d.getFullYear() + "-" +
+        String(d.getMonth() + 1).padStart(2, "0") + "-" +
+        String(d.getDate()).padStart(2, "0");
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, c => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[c]);
+}
+
+function showPage(id, button) {
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.toggle("active", page.id === id);
+    });
+
+    document.querySelectorAll("nav button").forEach(b => {
+        b.classList.toggle("active", b === button);
+    });
+
+    if (id === "maker") renderChoices();
+}
+
+function renderDashboard() {
+    document.getElementById("todayPapers").textContent =
+        data.papers.filter(p => p.date === today()).length;
+
+    document.getElementById("totalPapers").textContent =
+        data.papers.length;
+
+    document.getElementById("todayQuestions").textContent =
+        data.questions.filter(q => q.date === today()).length;
+
+    document.getElementById("totalQuestions").textContent =
+        data.questions.length;
+}
+
+document.getElementById("questionForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    data.questions.push({
+        id: Date.now() + Math.random(),
+        board: qBoard.value.trim(),
+        cls: qClass.value.trim(),
+        subject: qSubject.value.trim(),
+        medium: qMedium.value.trim(),
+        chapter: qChapter.value.trim(),
+        marks: Number(qMarks.value),
+        text: qText.value.trim(),
+        answer: qAnswer.value.trim(),
+        date: today()
+    });
+
+    this.reset();
+    qMarks.value = 1;
+    save();
+    alert("Question saved.");
+};
+
+function renderQuestions() {
+    questionList.innerHTML = data.questions.length
+        ? data.questions.map((q, i) => `
+            <div class="item">
+                <strong>${i + 1}. ${escapeHTML(q.text)}</strong>
+                <p class="small">
+                    Class ${escapeHTML(q.cls)} |
+                    ${escapeHTML(q.subject)} |
+                    ${escapeHTML(q.chapter)} |
+                    ${escapeHTML(q.marks)} marks
+                </p>
+                <button onclick="deleteQuestion(${i})">
+                    Delete
+                </button>
+            </div>
+        `).join("")
+        : '<p class="small">No questions saved yet.</p>';
+}
+
+function deleteQuestion(i) {
+    if (confirm("Delete this question?")) {
+        data.questions.splice(i, 1);
+        save();
+    }
+}
+
+function renderChoices() {
+    paperQuestionChoices.innerHTML = data.questions.length
+        ? data.questions.map((q, i) => `
+            <label>
+                <input type="checkbox" class="questionPick" value="${i}"
+                       style="width:auto">
+                ${escapeHTML(q.text)}
+                (${escapeHTML(q.marks)} marks)
+            </label>
+        `).join("<hr>")
+        : '<p class="small">Add questions to the Question Bank first.</p>';
+}
+
+function buildPaper() {
+    const source = pSource.value;
+    let selected = [];
+
+    if (source !== "ai") {
+        document.querySelectorAll(".questionPick:checked")
+            .forEach(input => {
+                const q = data.questions[Number(input.value)];
+                if (q) selected.push({
+                    text: q.text,
+                    marks: q.marks,
+                    answer: q.answer,
+                    origin: "Question Bank"
+                });
+            });
+    }
+
+    if (source === "ai" || source === "both") {
+        aiQuestions.value.split("\n")
+            .map(x => x.trim())
+            .filter(Boolean)
+            .forEach(text => selected.push({
+                text,
+                marks: 1,
+                answer: "",
+                origin: "AI-generated"
+            }));
+    }
+
+    if (!selected.length) {
+        alert("Select bank questions or enter AI-generated questions.");
+        return;
+    }
+
+    const paper = {
+        id: Date.now(),
+        title: pTitle.value.trim(),
+        board: pBoard.value.trim(),
+        cls: pClass.value.trim(),
+        subject: pSubject.value.trim(),
+        medium: pMedium.value.trim(),
+        exam: pExam.value.trim(),
+        marks: Number(pMarks.value),
+        duration: pDuration.value.trim(),
+        syllabus: pSyllabus.value.trim(),
+        pattern: pPattern.value.trim(),
+        source,
+        questions: selected,
+        date: today()
+    };
+
+    const questionMarks = selected.reduce(
+        (sum, q) => sum + Number(q.marks || 0), 0
+    );
+
+    if (questionMarks !== paper.marks) {
+        if (!confirm(
+            "The selected questions total " + questionMarks +
+            " marks, but the paper is set to " + paper.marks +
+            " marks. Save anyway?"
+        )) return;
+    }
+
+    data.papers.push(paper);
+    save();
+    displayPreview(paper);
+    alert("Paper saved. Open Saved Papers to download it.");
+}
+
+function displayPreview(p) {
+    preview.innerHTML = `
+        <div class="card" id="paperOutput">
+            <h2 style="text-align:center">
+                ${escapeHTML(p.board)}
+            </h2>
+            <h2 style="text-align:center">
+                ${escapeHTML(p.title)}
+            </h2>
+            <p style="text-align:center">
+                Class: ${escapeHTML(p.cls)} |
+                Subject: ${escapeHTML(p.subject)}
+            </p>
+            <p style="text-align:center">
+                Duration: ${escapeHTML(p.duration)} |
+                Maximum Marks: ${escapeHTML(p.marks)}
+            </p>
+            <hr>
+            <p><strong>Syllabus:</strong>
+                ${escapeHTML(p.syllabus)}</p>
+            <p><strong>Paper Pattern:</strong><br>
+                ${escapeHTML(p.pattern).replace(/\n/g, "<br>")}
+            </p>
+            <ol>
+                ${p.questions.map(q => `
+                    <li style="margin-bottom:12px">
+                        ${escapeHTML(q.text)}
+                        [${escapeHTML(q.marks)} marks]
+                        <span class="small">
+                            — ${escapeHTML(q.origin)}
+                        </span>
+                    </li>
+                `).join("")}
+            </ol>
+            <button onclick="downloadWord(${p.id})">
+                Download Word File
+            </button>
+        </div>
+    `;
+
+    preview.scrollIntoView({ behavior: "smooth" });
+}
+
+function downloadWord(id) {
+    const p = data.papers.find(x => x.id === id);
+    if (!p) return;
+
+    const content = `
+        <html>
+        <head><meta charset="utf-8"></head>
+        <body>
+            <h2 align="center">${escapeHTML(p.board)}</h2>
+            <h2 align="center">${escapeHTML(p.title)}</h2>
+            <p>Class: ${escapeHTML(p.cls)} |
+               Subject: ${escapeHTML(p.subject)}</p>
+            <p>Maximum Marks: ${escapeHTML(p.marks)} |
+               Duration: ${escapeHTML(p.duration)}</p>
+            <p>Paper Pattern:<br>
+               ${escapeHTML(p.pattern).replace(/\n/g, "<br>")}</p>
+            <ol>
+                ${p.questions.map(q => `
+                    <li>${escapeHTML(q.text)}
+                    [${escapeHTML(q.marks)} marks]</li>
+                `).join("")}
+            </ol>
+        </body>
+        </html>`;
+
+    const blob = new Blob(["\ufeff", content], {
+        type: "application/msword"
+    });
+
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = p.title.replace(/[^a-z0-9]/gi, "_") + ".doc";
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+function renderPapers() {
+    paperList.innerHTML = data.papers.length
+        ? data.papers.slice().reverse().map(p => `
+            <div class="item">
+                <strong>${escapeHTML(p.title)}</strong>
+                <p class="small">
+                    Class ${escapeHTML(p.cls)} |
+                    ${escapeHTML(p.subject)} |
+                    ${escapeHTML(p.marks)} marks
+                </p>
+                <button onclick="downloadWord(${p.id})">
+                    Download Word
+                </button>
+            </div>
+        `).join("")
+        : '<p class="small">No papers saved yet.</p>';
+}
+
+document.getElementById("customerForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    data.customers.push({
+        name: cName.value.trim(),
+        person: cPerson.value.trim(),
+        phone: cPhone.value.trim(),
+        email: cEmail.value.trim()
+    });
+
+    this.reset();
+    save();
+    alert("Customer saved.");
+};
+
+function renderCustomers() {
+    customerList.innerHTML = data.customers.map(c => `
+        <div class="item">
+            <strong>${escapeHTML(c.name)}</strong>
+            <p>${escapeHTML(c.person)} |
+               ${escapeHTML(c.phone)}</p>
+            <p class="small">${escapeHTML(c.email)}</p>
+        </div>
+    `).join("") || '<p class="small">No customers saved yet.</p>';
+}
+
+document.getElementById("orderForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    data.orders.push({
+        customer: oCustomer.value.trim(),
+        details: oDetails.value.trim(),
+        amount: Number(oAmount.value),
+        status: oStatus.value,
+        date: today()
+    });
+
+    this.reset();
+    save();
+    alert("Order saved.");
+};
+
+function renderOrders() {
+    orderList.innerHTML = data.orders.map(o => `
+        <div class="item">
+            <strong>${escapeHTML(o.customer)}</strong>
+            <p>${escapeHTML(o.details)}</p>
+            <p>Amount: ₹${escapeHTML(o.amount)}</p>
+            <p>Payment: ${escapeHTML(o.status)}</p>
+        </div>
+    `).join("") || '<p class="small">No orders saved yet.</p>';
+}
+
+function renderAll() {
+    renderDashboard();
+    renderQuestions();
+    renderChoices();
+    renderPapers();
+    renderCustomers();
+    renderOrders();
+}
+
+renderAll();
+</script>
+
+</body>
+</html>
