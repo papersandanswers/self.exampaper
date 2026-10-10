@@ -4,954 +4,476 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Paper Management System</title>
-
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f1f5f9;
-    color: #172554;
-}
-
-header {
-    background: #172554;
-    color: white;
-    padding: 22px 16px;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 23px;
-}
-
-header p {
-    margin-bottom: 0;
-    color: #dbeafe;
-}
-
-main {
-    max-width: 1100px;
-    margin: auto;
-    padding: 16px;
-}
-
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 18px;
-}
-
-button {
-    padding: 11px 14px;
-    border: none;
-    border-radius: 8px;
-    background: #2563eb;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-nav button {
-    background: white;
-    color: #172554;
-    border: 1px solid #cbd5e1;
-}
-
-nav button.active {
-    background: #2563eb;
-    color: white;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-}
-
-.card {
-    background: white;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 14px;
-    box-shadow: 0 2px 7px #00000008;
-}
-
-.stat-number {
-    font-size: 30px;
-    font-weight: bold;
-    margin-top: 8px;
-}
-
-.stat-label {
-    color: #64748b;
-    font-size: 13px;
-}
-
-.menu {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-}
-
-.menu button {
-    background: white;
-    color: #172554;
-    border: 1px solid #dbe3ef;
-    text-align: left;
-    min-height: 105px;
-    line-height: 1.5;
-}
-
-.menu strong {
-    display: block;
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
-.menu span {
-    color: #64748b;
-    font-size: 12px;
-    font-weight: normal;
-}
-
-.page {
-    display: none;
-}
-
-.page.active {
-    display: block;
-}
-
-h2 {
-    font-size: 21px;
-}
-
-label {
-    display: block;
-    font-size: 13px;
-    font-weight: bold;
-    margin: 12px 0 5px;
-}
-
-input, select, textarea {
-    width: 100%;
-    padding: 11px;
-    border: 1px solid #cbd5e1;
-    border-radius: 7px;
-    font-size: 15px;
-    background: white;
-}
-
-textarea {
-    min-height: 90px;
-}
-
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-.full {
-    grid-column: 1 / -1;
-}
-
-.item {
-    border: 1px solid #dbe3ef;
-    border-radius: 8px;
-    padding: 12px;
-    margin-top: 10px;
-    overflow-wrap: anywhere;
-}
-
-.small {
-    color: #64748b;
-    font-size: 13px;
-}
-
-.notice {
-    background: #eff6ff;
-    padding: 12px;
-    border-radius: 8px;
-    color: #1e40af;
-    margin: 12px 0;
-}
-
-.warning {
-    background: #fff7ed;
-    padding: 12px;
-    border-radius: 8px;
-    color: #9a3412;
-    margin: 12px 0;
-}
-
-@media(max-width:700px) {
-    .stats {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .menu {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .full {
-        grid-column: auto;
-    }
-}
-
-@media(max-width:380px) {
-    .menu {
-        grid-template-columns: 1fr;
-    }
-}
+:root{--blue:#2459c4;--navy:#173665;--bg:#f3f6fc;--white:#fff;--text:#24344b;--muted:#687991;--border:#dce5f0;--green:#12865e;--purple:#7954d8;--orange:#df8a22;--red:#c24141}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.header{background:linear-gradient(120deg,#173665,#2869df);color:white;padding:18px 22px}
+.header-inner{max-width:1500px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{background:white;color:var(--navy);width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:26px}
+.brand h1{font-size:22px;margin:0 0 5px}
+.brand p{font-size:12px;margin:0;color:#dceaff}
+.header-tag{border:1px solid #ffffff55;background:#ffffff18;padding:9px 13px;border-radius:22px;font-size:12px}
+.layout{max-width:1500px;margin:auto;padding:18px;display:grid;grid-template-columns:225px minmax(0,1fr);gap:18px}
+.sidebar{background:white;border:1px solid var(--border);border-radius:15px;padding:10px;height:max-content;position:sticky;top:12px}
+.navbtn{display:flex;gap:10px;align-items:center;width:100%;border:0;background:white;color:#455570;text-align:left;padding:12px;border-radius:9px;margin:3px 0;font-weight:600}
+.navbtn.active,.navbtn:hover{background:#eaf1ff;color:var(--blue)}
+.main{min-width:0}
+.page{display:none}
+.page.active{display:block}
+.mobile-nav{display:none}
+.heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.heading h2{margin:0 0 7px;font-size:25px}
+.heading p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.card,.panel{background:white;border:1px solid var(--border);border-radius:14px;padding:17px;min-width:0}
+.card-label{font-size:12px;color:var(--muted);font-weight:700}
+.card-icon{float:right;font-size:23px}
+.card-number{font-size:30px;color:var(--navy);font-weight:800;margin:13px 0 6px}
+.card-note{font-size:11px;color:var(--muted)}
+.panel{margin-bottom:17px}
+.panel h3{font-size:17px;margin:0 0 15px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+.panel-head h3{margin:0}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.field{min-width:0;margin-bottom:13px}
+label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:#465670}
+input,select,textarea{width:100%;padding:11px;border:1px solid #cbd7e6;border-radius:9px;background:white;color:var(--text);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #2459c41a}
+textarea{resize:vertical;min-height:90px}
+.btn{border:0;border-radius:9px;padding:10px 14px;font-weight:700;display:inline-flex;justify-content:center;align-items:center;gap:6px}
+.primary{background:var(--blue);color:white}
+.secondary{background:#eaf1ff;color:#214ca2}
+.green{background:#dcfce9;color:#08744e}
+.light{background:#f1f5f9;color:#334155}
+.danger{background:#fee2e2;color:#b91c1c}
+.small{padding:7px 9px;font-size:12px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.note{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;padding:12px;border-radius:9px;font-size:13px;line-height:1.6;margin-bottom:15px}
+.warning{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;padding:12px;border-radius:9px;font-size:13px;line-height:1.6;margin-bottom:15px}
+.small-note{font-size:12px;color:var(--muted);line-height:1.5}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:730px}
+th,td{padding:11px;text-align:left;border-bottom:1px solid #e6edf5;vertical-align:top;font-size:13px;line-height:1.5}
+th{background:#f7f9fd;color:#52637b;font-size:12px;white-space:nowrap}
+.badge{display:inline-block;background:#eaf1ff;color:#244ca2;padding:4px 8px;border-radius:20px;font-size:11px;font-weight:700}
+.empty{text-align:center;padding:30px 12px;color:var(--muted)}
+.empty div{font-size:30px;margin-bottom:8px}
+.checkrow{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1px solid var(--border);border-radius:9px;margin-bottom:8px}
+.checkrow input{width:auto;margin-top:4px}
+.checkrow label{flex:1;line-height:1.5;font-weight:500;margin:0}
+.preview{border:1px solid var(--border);padding:18px;margin-top:16px;border-radius:10px;background:#fff}
+.preview h3,.preview h4{text-align:center}
+.paperq{padding:10px 0;border-bottom:1px dashed var(--border);line-height:1.6}
+hr{border:0;border-top:1px solid var(--border);margin:17px 0}
+.footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(max-width:1050px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.layout{grid-template-columns:190px minmax(0,1fr);padding:12px}}
+@media(max-width:650px){.header{padding:15px}.brand h1{font-size:18px}.layout{display:block;padding:10px}.sidebar{display:none}.mobile-nav{display:flex;overflow-x:auto;gap:5px;padding:7px;background:white;border:1px solid var(--border);border-radius:11px;margin-bottom:13px}.mobile-nav .navbtn{width:max-content;min-width:max-content;margin:0;padding:10px}.grid2,.grid3{grid-template-columns:1fr}.cards{gap:8px}.card{padding:12px}.card-number{font-size:25px}.panel{padding:13px}.heading h2{font-size:22px}}
 </style>
 </head>
-
 <body>
 
-<header>
-    <h1>📘 Paper Management System</h1>
-    <p>Question Papers | Answer Keys | Model Answers</p>
+<header class="header">
+ <div class="header-inner">
+  <div class="brand">
+   <div class="logo">📚</div>
+   <div><h1>Paper Management System</h1><p>Question Bank · Question Papers · Model Answers</p></div>
+  </div>
+  <div class="header-tag">🎓 Education Workspace</div>
+ </div>
 </header>
 
-<main>
+<div class="layout">
+ <aside class="sidebar" id="desktopNav"></aside>
+ <main class="main">
+  <div class="mobile-nav" id="mobileNav"></div>
 
-<nav>
-    <button class="active" onclick="showPage('dashboard',this)">
-        Dashboard
-    </button>
+  <section class="page active" id="dashboard">
+   <div class="heading"><div><h2>Dashboard</h2><p>Manage your question bank and question papers in one place.</p></div><button class="btn primary" onclick="go('maker')">＋ Create Paper</button></div>
+   <div class="cards">
+    <div class="card"><span class="card-icon">📚</span><div class="card-label">Total Questions</div><div class="card-number" id="totalQ">0</div><div class="card-note">Saved in this browser</div></div>
+    <div class="card"><span class="card-icon">✍️</span><div class="card-label">Questions Added Today</div><div class="card-number" id="todayQ">0</div><div class="card-note">Based on creation date</div></div>
+    <div class="card"><span class="card-icon">📄</span><div class="card-label">Total Papers Created</div><div class="card-number" id="totalP">0</div><div class="card-note">Saved papers</div></div>
+    <div class="card"><span class="card-icon">📝</span><div class="card-label">Papers Created Today</div><div class="card-number" id="todayP">0</div><div class="card-note">Based on creation date</div></div>
+   </div>
+   <div class="grid2">
+    <div class="panel"><h3>🚀 Quick Actions</h3><div class="actions"><button class="btn primary" onclick="go('bank')">＋ Add Question</button><button class="btn secondary" onclick="go('maker')">Create Paper</button><button class="btn light" onclick="go('saved')">Saved Papers</button></div></div>
+    <div class="panel"><h3>📈 Question Bank Coverage</h3><p>Boards: <b id="boards">0</b></p><p>Classes: <b id="classes">0</b></p><p>Subjects: <b id="subjects">0</b></p><p>Chapters: <b id="chapters">0</b></p></div>
+   </div>
+   <div class="panel"><h3>🕘 Recently Added Questions</h3><div id="recent"></div></div>
+   <div class="warning"><b>Storage status:</b> Data is currently saved in this browser only. Google Sheets synchronisation and AI generation are not connected yet. Do not rely on this local version as your only business backup.</div>
+  </section>
 
-    <button onclick="showPage('bank',this)">
-        Question Bank
-    </button>
-
-    <button onclick="showPage('maker',this)">
-        Paper Maker
-    </button>
-
-    <button onclick="showPage('papers',this)">
-        Saved Papers
-    </button>
-
-    <button onclick="showPage('customers',this)">
-        Customers
-    </button>
-
-    <button onclick="showPage('orders',this)">
-        Orders & Payments
-    </button>
-</nav>
-
-<!-- DASHBOARD -->
-
-<section id="dashboard" class="page active">
-
-    <h2>Dashboard</h2>
-
-    <div class="stats">
-
-        <div class="card">
-            <div class="stat-label">Papers Created Today</div>
-            <div class="stat-number" id="todayPapers">0</div>
-        </div>
-
-        <div class="card">
-            <div class="stat-label">Total Papers</div>
-            <div class="stat-number" id="totalPapers">0</div>
-        </div>
-
-        <div class="card">
-            <div class="stat-label">Questions Added Today</div>
-            <div class="stat-number" id="todayQuestions">0</div>
-        </div>
-
-        <div class="card">
-            <div class="stat-label">Total Questions</div>
-            <div class="stat-number" id="totalQuestions">0</div>
-        </div>
-
+  <section class="page" id="bank">
+   <div class="heading"><div><h2>📚 Question Bank</h2><p>Add questions and organise them by board, class, subject, medium and chapter.</p></div></div>
+   <div class="panel">
+    <div class="panel-head"><h3 id="formTitle">Add a New Question</h3><button class="btn light small" onclick="resetForm()">Clear Form</button></div>
+    <div class="grid3">
+     <div class="field"><label>Board *</label><select id="qBoard"></select></div>
+     <div class="field"><label>Class / Standard *</label><select id="qClass"></select></div>
+     <div class="field"><label>Subject *</label><select id="qSubject"></select></div>
+     <div class="field"><label>Medium *</label><select id="qMedium"></select></div>
+     <div class="field"><label>Chapter / Lesson *</label><select id="qChapter"></select></div>
+     <div class="field"><label>Marks *</label><select id="qMarks"></select></div>
+     <div class="field"><label>Question Type *</label><select id="qType"></select></div>
+     <div class="field"><label>Difficulty</label><select id="qDifficulty"><option>Medium</option><option>Easy</option><option>Difficult</option></select></div>
+     <div class="field"><label>Source / Textbook</label><input id="qSource" placeholder="Textbook / workbook"></div>
+     <div class="field"><label>Page Number</label><input id="qPage" placeholder="Optional"></div>
     </div>
-
-    <h2>Management Sections</h2>
-
-    <div class="menu">
-
-        <button onclick="showPage('maker')">
-            📝
-            <strong>Question Paper Maker</strong>
-            <span>Create papers manually or with AI assistance.</span>
-        </button>
-
-        <button onclick="showPage('bank')">
-            📚
-            <strong>Question Bank</strong>
-            <span>Store questions for future papers.</span>
-        </button>
-
-        <button onclick="showPage('papers')">
-            📄
-            <strong>Saved Papers</strong>
-            <span>View and download question papers.</span>
-        </button>
-
-        <button onclick="showPage('customers')">
-            🏫
-            <strong>Schools & Tuition</strong>
-            <span>Manage customer information.</span>
-        </button>
-
-        <button onclick="showPage('orders')">
-            💰
-            <strong>Orders & Payments</strong>
-            <span>Record orders and payment status.</span>
-        </button>
-
-        <button onclick="showPage('maker')">
-            🤖
-            <strong>AI Paper Maker</strong>
-            <span>Choose a question source for each paper.</span>
-        </button>
-
+    <div class="field"><label>Question *</label><textarea id="qText" placeholder="Enter the exact question..."></textarea></div>
+    <div class="field"><label>Answer / Model Answer</label><textarea id="qAnswer" placeholder="Enter answer if available..."></textarea></div>
+    <div class="actions"><button class="btn primary" id="saveQBtn" onclick="saveQuestion()">💾 Save Question</button><button class="btn light" onclick="resetForm()">Cancel / Clear</button></div>
+    <p class="small-note">Each row represents one question or subquestion. Use Add New in a drop-down to create custom options.</p>
+   </div>
+   <div class="panel">
+    <div class="panel-head"><h3>Search and Filter</h3><button class="btn secondary small" onclick="exportCSV()">Export CSV</button></div>
+    <div class="grid3">
+     <div class="field"><label>Board</label><select id="fBoard" onchange="renderBank()"></select></div>
+     <div class="field"><label>Class</label><select id="fClass" onchange="renderBank()"></select></div>
+     <div class="field"><label>Subject</label><select id="fSubject" onchange="renderBank()"></select></div>
+     <div class="field"><label>Chapter</label><select id="fChapter" onchange="renderBank()"></select></div>
+     <div class="field"><label>Medium</label><select id="fMedium" onchange="renderBank()"></select></div>
+     <div class="field"><label>Search</label><input id="fSearch" oninput="renderBank()" placeholder="Search question text..."></div>
     </div>
+    <p class="small-note" id="bankCount"></p><div id="bankTable"></div>
+   </div>
+  </section>
 
-    <div class="notice">
-        Online database connection and live AI generation will be
-        configured in the next steps.
+  <section class="page" id="maker">
+   <div class="heading"><div><h2>📝 Question Paper Maker</h2><p>Select questions from your bank to create a paper.</p></div></div>
+   <div class="panel">
+    <h3>Paper Details</h3>
+    <div class="grid3">
+     <div class="field"><label>Paper Title</label><input id="pTitle" placeholder="e.g. Class 10 Science Unit Test"></div>
+     <div class="field"><label>Paper Type</label><select id="pType"></select></div>
+     <div class="field"><label>Board</label><select id="pBoard" onchange="makerBoardChanged()"></select></div>
+     <div class="field"><label>Class</label><select id="pClass" onchange="makerClassChanged()"></select></div>
+     <div class="field"><label>Subject</label><select id="pSubject" onchange="makerSubjectChanged()"></select></div>
+     <div class="field"><label>Medium</label><select id="pMedium"></select></div>
+     <div class="field"><label>Chapters</label><select id="pChapter" onchange="renderMaker()"></select></div>
+     <div class="field"><label>Maximum Marks</label><input id="pMax" type="number" min="1" placeholder="e.g. 40"></div>
+     <div class="field"><label>Duration</label><input id="pDuration" placeholder="e.g. 2 Hours"></div>
     </div>
-
-</section>
-
-<!-- QUESTION BANK -->
-
-<section id="bank" class="page">
-
-    <h2>Question Bank</h2>
-
-    <div class="card">
-
-        <form id="questionForm">
-
-            <div class="form-grid">
-
-                <div>
-                    <label>Board</label>
-                    <input id="qBoard" placeholder="Maharashtra State Board">
-                </div>
-
-                <div>
-                    <label>Class</label>
-                    <input id="qClass" placeholder="10th" required>
-                </div>
-
-                <div>
-                    <label>Subject</label>
-                    <input id="qSubject" placeholder="Science I" required>
-                </div>
-
-                <div>
-                    <label>Medium</label>
-                    <input id="qMedium" placeholder="English">
-                </div>
-
-                <div>
-                    <label>Chapter</label>
-                    <input id="qChapter" placeholder="Chapter 1">
-                </div>
-
-                <div>
-                    <label>Marks</label>
-                    <input id="qMarks" type="number" min="0"
-                           step="0.5" value="1" required>
-                </div>
-
-                <div class="full">
-                    <label>Question</label>
-                    <textarea id="qText"
-                              placeholder="Enter the exact question"
-                              required></textarea>
-                </div>
-
-                <div class="full">
-                    <label>Answer (optional)</label>
-                    <textarea id="qAnswer"
-                              placeholder="Enter the answer"></textarea>
-                </div>
-
-            </div>
-
-            <p>
-                <button type="submit">Save Question</button>
-            </p>
-
-        </form>
-
-    </div>
-
-    <div id="questionList"></div>
-
-</section>
-
-<!-- PAPER MAKER -->
-
-<section id="maker" class="page">
-
-    <h2>Question Paper Maker</h2>
-
-    <div class="card">
-
-        <form id="paperForm">
-
-            <div class="form-grid">
-
-                <div>
-                    <label>Paper Title</label>
-                    <input id="pTitle"
-                           placeholder="Science Unit Test"
-                           required>
-                </div>
-
-                <div>
-                    <label>Board</label>
-                    <input id="pBoard"
-                           placeholder="Maharashtra State Board">
-                </div>
-
-                <div>
-                    <label>Class</label>
-                    <input id="pClass" placeholder="10th" required>
-                </div>
-
-                <div>
-                    <label>Subject</label>
-                    <input id="pSubject" placeholder="Science I" required>
-                </div>
-
-                <div>
-                    <label>Medium</label>
-                    <input id="pMedium" placeholder="English">
-                </div>
-
-                <div>
-                    <label>Exam Type</label>
-                    <input id="pExam" placeholder="Unit Test">
-                </div>
-
-                <div>
-                    <label>Total Marks</label>
-                    <input id="pMarks" type="number"
-                           min="1" value="40" required>
-                </div>
-
-                <div>
-                    <label>Duration</label>
-                    <input id="pDuration" placeholder="2 Hours">
-                </div>
-
-                <div class="full">
-                    <label>Syllabus / Chapters</label>
-                    <textarea id="pSyllabus"
-                              placeholder="Enter chapters and syllabus"></textarea>
-                </div>
-
-                <div class="full">
-                    <label>Question Paper Pattern</label>
-                    <textarea id="pPattern"
-                              placeholder="Q.1 (A) MCQs — 5 marks&#10;Q.1 (B) Short answers — 5 marks"
-                              required></textarea>
-                </div>
-
-                <div class="full">
-                    <label>Question Source</label>
-
-                    <select id="pSource">
-                        <option value="bank">
-                            A — Question Bank Only
-                        </option>
-
-                        <option value="ai">
-                            B — AI-Generated Questions
-                        </option>
-
-                        <option value="both" selected>
-                            C — Both Combined
-                        </option>
-                    </select>
-                </div>
-
-                <div class="full">
-                    <label>AI-Generated Questions</label>
-                    <textarea id="aiQuestions"
-                              placeholder="Paste or enter AI-generated questions here. One question per line."></textarea>
-                </div>
-
-            </div>
-
-            <div class="warning">
-                Live AI generation is not connected yet. You can enter
-                AI-generated questions here for now. We will configure
-                the secure AI connection separately.
-            </div>
-
-            <button type="button" onclick="buildPaper()">
-                Build Question Paper
-            </button>
-
-        </form>
-
-    </div>
-
-    <div class="card">
-        <h3>Select Questions from Question Bank</h3>
-        <div id="paperQuestionChoices"></div>
-    </div>
-
+    <div class="field"><label>Instructions</label><textarea id="pInstructions" placeholder="Enter examination instructions..."></textarea></div>
+   </div>
+   <div class="panel">
+    <div class="panel-head"><h3>Choose Questions</h3><div class="actions"><button class="btn secondary small" onclick="selectVisible(true)">Select Visible</button><button class="btn light small" onclick="selectVisible(false)">Clear Visible</button></div></div>
+    <p class="small-note" id="makerCount"></p><div id="makerQuestions"></div>
+    <hr>
+    <div class="actions"><button class="btn primary" onclick="previewPaper()">👁 Preview</button><button class="btn green" onclick="savePaper()">💾 Save Paper</button><button class="btn secondary" onclick="downloadCurrentWord()">📄 Download Word</button><button class="btn light" onclick="downloadAnswerKey()">✅ Download Answer Key</button></div>
     <div id="preview"></div>
+   </div>
+  </section>
 
-</section>
+  <section class="page" id="saved">
+   <div class="heading"><div><h2>📄 Saved Papers</h2><p>View, download or delete papers created in this browser.</p></div></div>
+   <div class="panel"><div id="savedList"></div><div id="savedPreview"></div></div>
+  </section>
 
-<!-- SAVED PAPERS -->
-
-<section id="papers" class="page">
-
-    <h2>Saved Question Papers</h2>
-    <div id="paperList"></div>
-
-</section>
-
-<!-- CUSTOMERS -->
-
-<section id="customers" class="page">
-
-    <h2>Schools & Tuition</h2>
-
-    <div class="card">
-
-        <form id="customerForm">
-
-            <label>School / Tuition Name</label>
-            <input id="cName" required>
-
-            <label>Contact Person</label>
-            <input id="cPerson">
-
-            <label>Phone</label>
-            <input id="cPhone" inputmode="tel">
-
-            <label>Email</label>
-            <input id="cEmail" type="email">
-
-            <p>
-                <button type="submit">Save Customer</button>
-            </p>
-
-        </form>
-
+  <section class="page" id="settings">
+   <div class="heading"><div><h2>⚙️ Settings & Data</h2><p>Manage dropdown options, backups and data import.</p></div></div>
+   <div class="panel">
+    <h3>Manage Drop-down Options</h3>
+    <p class="small-note">Choose a list, add a new option or remove an option. Options already used in saved questions are not removed from those questions.</p>
+    <div class="grid2">
+     <div class="field"><label>List to Manage</label><select id="listType" onchange="renderOptionList()"></select></div>
+     <div class="field"><label>New Option</label><input id="newOption" placeholder="Type new option"></div>
     </div>
+    <div class="actions"><button class="btn primary" onclick="addOption()">＋ Add Option</button></div>
+    <hr><div id="optionList"></div>
+   </div>
+   <div class="panel">
+    <h3>Import Questions from CSV</h3>
+    <p class="small-note">Required headers: Board, Class, Subject, Chapter, Question. Optional headers: Medium, Marks, Type, Answer, Source, Page, Difficulty.</p>
+    <div class="field"><label>Choose CSV File</label><input id="csvFile" type="file" accept=".csv,text/csv"></div>
+    <button class="btn primary" onclick="importCSV()">Import Questions</button>
+   </div>
+   <div class="panel">
+    <h3>Backup and Restore</h3>
+    <div class="actions"><button class="btn secondary" onclick="backup()">Download Backup JSON</button><label class="btn light" for="restoreFile">Restore Backup JSON</label><input id="restoreFile" type="file" accept=".json" style="display:none" onchange="restore(event)"></div>
+   </div>
+   <div class="panel">
+    <h3>Google Sheets and AI</h3>
+    <div class="warning">Google Sheets, cross-device synchronisation and live AI generation are not connected in this version. We will configure a secure backend separately. Never put an AI API key or private password in this public HTML file.</div>
+   </div>
+   <div class="panel"><h3>Delete Local Data</h3><button class="btn danger" onclick="clearData()">Delete All Questions and Papers</button></div>
+  </section>
 
-    <div id="customerList"></div>
-
-</section>
-
-<!-- ORDERS -->
-
-<section id="orders" class="page">
-
-    <h2>Orders & Payments</h2>
-
-    <div class="card">
-
-        <form id="orderForm">
-
-            <label>Customer Name</label>
-            <input id="oCustomer" required>
-
-            <label>Order Details</label>
-            <input id="oDetails"
-                   placeholder="Class 8 Science — 4 papers"
-                   required>
-
-            <label>Amount (₹)</label>
-            <input id="oAmount" type="number" min="0" required>
-
-            <label>Payment Status</label>
-            <select id="oStatus">
-                <option>Unpaid</option>
-                <option>Partially Paid</option>
-                <option>Paid</option>
-            </select>
-
-            <p>
-                <button type="submit">Save Order</button>
-            </p>
-
-        </form>
-
-    </div>
-
-    <div id="orderList"></div>
-
-</section>
-
-</main>
+  <div class="footer">Paper Management System · Education Workspace</div>
+ </main>
+</div>
 
 <script>
-const KEY = "pms_starter_data";
-
-let data = JSON.parse(localStorage.getItem(KEY) || "null") || {
-    questions: [],
-    papers: [],
-    customers: [],
-    orders: []
+const DEFAULTS={
+ board:["Maharashtra State Board","CBSE","ICSE","NIOS","IGCSE","IB","BOSSE","Other"],
+ className:["Class 1","Class 2","Class 3","Class 4","Class 5","Class 6","Class 7","Class 8","Class 9","Class 10","Class 11","Class 12","FYJC","SYJC","College","Other"],
+ subject:["English","Marathi","Hindi","Mathematics","Science","Science I","Science II","EVS","Social Science","History","Geography","Civics","Physics","Chemistry","Biology","Accountancy","Business Studies","Economics","Psychology","Computer Science","Other"],
+ medium:["English","Marathi","Hindi","Gujarati","Urdu","Semi-English","Other"],
+ chapter:["Chapter 1","Chapter 2","Chapter 3","Chapter 4","Chapter 5","Chapter 6","Chapter 7","Chapter 8","Chapter 9","Chapter 10","Other"],
+ marks:["1","2","3","4","5","6","8","10","12","15","16","20","25","30","40","50","60","80","100"],
+ questionType:["MCQ","Short Answer","Long Answer","Very Short Answer","Fill in the Blanks","True or False","Match the Following","Grammar","Writing Skills","Diagram","Numerical","Activity","Extract Based","Comprehension","Other"],
+ paperType:["Unit Test","Semester Exam","Terminal Exam","Preliminary Exam","Annual Exam","Practice Paper","Model Paper","Board Exam Paper","Worksheet","Class Test","Mock Test","Other"],
+ difficulty:["Easy","Medium","Difficult"]
 };
+const LIST_LABELS={board:"Boards",className:"Classes",subject:"Subjects",medium:"Mediums",chapter:"Chapters",marks:"Marks",questionType:"Question Types",paperType:"Paper Types",difficulty:"Difficulty Levels"};
+const NAV=[["dashboard","📊","Dashboard"],["bank","📚","Question Bank"],["maker","📝","Question Paper Maker"],["saved","📄","Saved Papers"],["settings","⚙️","Settings & Data"]];
+function read(key,fallback){try{const x=JSON.parse(localStorage.getItem(key));return x??fallback}catch(e){return fallback}}
+let questions=read("pms_questions_v3",[]);
+let papers=read("pms_papers_v3",[]);
+let options=read("pms_options_v3",DEFAULTS);
+for(const k in DEFAULTS){options[k]=Array.isArray(options[k])?[...new Set([...DEFAULTS[k],...options[k]])]:DEFAULTS[k].slice()}
+let editingId=null;
+let selected=new Set();
 
-function save() {
-    localStorage.setItem(KEY, JSON.stringify(data));
-    renderAll();
+function persist(){localStorage.setItem("pms_questions_v3",JSON.stringify(questions));localStorage.setItem("pms_papers_v3",JSON.stringify(papers));localStorage.setItem("pms_options_v3",JSON.stringify(options))}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
+function uniq(a){return [...new Set(a.map(v=>String(v??"").trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true,sensitivity:"base"}))}
+function dl(name,content,type){const b=new Blob(["\ufeff",content],{type});const u=URL.createObjectURL(b);const a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function navBuild(){
+ const html=NAV.map(n=>`<button class="navbtn ${n[0]==="dashboard"?"active":""}" data-page="${n[0]}" onclick="go('${n[0]}')">${n[1]} ${n[2]}</button>`).join("");
+ document.getElementById("desktopNav").innerHTML=html;
+ document.getElementById("mobileNav").innerHTML=html;
 }
-
-function today() {
-    const d = new Date();
-    return d.getFullYear() + "-" +
-        String(d.getMonth() + 1).padStart(2, "0") + "-" +
-        String(d.getDate()).padStart(2, "0");
+function go(id){
+ document.querySelectorAll(".page").forEach(x=>x.classList.toggle("active",x.id===id));
+ document.querySelectorAll(".navbtn").forEach(x=>x.classList.toggle("active",x.dataset.page===id));
+ if(id==="dashboard")dashboard();
+ if(id==="bank")renderBank();
+ if(id==="maker"){populateMaker();renderMaker()}
+ if(id==="saved")renderSaved();
+ if(id==="settings"){populateListTypes();renderOptionList()}
+ window.scrollTo({top:0,behavior:"smooth"});
 }
-
-function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, c => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-    })[c]);
+function dropdown(id,key,first,selectedValue,allowAdd=false){
+ const el=document.getElementById(id);if(!el)return;
+ const old=selectedValue!==undefined?selectedValue:el.value;
+ const values=options[key]||[];
+ el.innerHTML=`<option value="">${esc(first||"Select option")}</option>`+values.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("")+(allowAdd?'<option value="__ADD__">＋ Add New...</option>':"");
+ if(values.includes(old))el.value=old;
 }
-
-function showPage(id, button) {
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.toggle("active", page.id === id);
-    });
-
-    document.querySelectorAll("nav button").forEach(b => {
-        b.classList.toggle("active", b === button);
-    });
-
-    if (id === "maker") renderChoices();
+function dropdownFilter(id,key,first,values){
+ const el=document.getElementById(id);if(!el)return;
+ const old=el.value;
+ el.innerHTML=`<option value="">${esc(first)}</option>`+uniq(values).map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join("");
+ if(uniq(values).includes(old))el.value=old;
 }
-
-function renderDashboard() {
-    document.getElementById("todayPapers").textContent =
-        data.papers.filter(p => p.date === today()).length;
-
-    document.getElementById("totalPapers").textContent =
-        data.papers.length;
-
-    document.getElementById("todayQuestions").textContent =
-        data.questions.filter(q => q.date === today()).length;
-
-    document.getElementById("totalQuestions").textContent =
-        data.questions.length;
+function setFieldAddHandler(id,key,label){
+ document.getElementById(id).addEventListener("change",function(){
+  if(this.value!=="__ADD__")return;
+  const v=prompt("Enter new "+label+":");
+  if(v&&v.trim()){
+   const value=v.trim();
+   if(!options[key].some(x=>x.toLowerCase()===value.toLowerCase()))options[key].push(value);
+   this.innerHTML=`<option value="">Select ${label}</option>`+options[key].map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("")+'<option value="__ADD__">＋ Add New...</option>';
+   this.value=options[key].find(x=>x.toLowerCase()===value.toLowerCase());
+   persist();renderOptionList();
+  }else this.value="";
+ });
 }
-
-document.getElementById("questionForm").onsubmit = function(e) {
-    e.preventDefault();
-
-    data.questions.push({
-        id: Date.now() + Math.random(),
-        board: qBoard.value.trim(),
-        cls: qClass.value.trim(),
-        subject: qSubject.value.trim(),
-        medium: qMedium.value.trim(),
-        chapter: qChapter.value.trim(),
-        marks: Number(qMarks.value),
-        text: qText.value.trim(),
-        answer: qAnswer.value.trim(),
-        date: today()
-    });
-
-    this.reset();
-    qMarks.value = 1;
-    save();
-    alert("Question saved.");
-};
-
-function renderQuestions() {
-    questionList.innerHTML = data.questions.length
-        ? data.questions.map((q, i) => `
-            <div class="item">
-                <strong>${i + 1}. ${escapeHTML(q.text)}</strong>
-                <p class="small">
-                    Class ${escapeHTML(q.cls)} |
-                    ${escapeHTML(q.subject)} |
-                    ${escapeHTML(q.chapter)} |
-                    ${escapeHTML(q.marks)} marks
-                </p>
-                <button onclick="deleteQuestion(${i})">
-                    Delete
-                </button>
-            </div>
-        `).join("")
-        : '<p class="small">No questions saved yet.</p>';
+function initDropdowns(){
+ [["qBoard","board","Board"],["qClass","className","Class"],["qSubject","subject","Subject"],["qMedium","medium","Medium"],["qChapter","chapter","Chapter"],["qMarks","marks","Marks"],["qType","questionType","Question Type"],["pType","paperType","Paper Type"]].forEach(([id,key,label])=>{
+  dropdown(id,key,"Select "+label,undefined,true);setFieldAddHandler(id,key,label);
+ });
+ dropdown("qDifficulty","difficulty","Select Difficulty");
 }
-
-function deleteQuestion(i) {
-    if (confirm("Delete this question?")) {
-        data.questions.splice(i, 1);
-        save();
-    }
+function dashboard(){
+ document.getElementById("totalQ").textContent=questions.length;
+ document.getElementById("todayQ").textContent=questions.filter(q=>q.createdDate===today()).length;
+ document.getElementById("totalP").textContent=papers.length;
+ document.getElementById("todayP").textContent=papers.filter(p=>p.createdDate===today()).length;
+ const count=k=>uniq(questions.map(q=>q[k])).length;
+ document.getElementById("boards").textContent=count("board");
+ document.getElementById("classes").textContent=count("className");
+ document.getElementById("subjects").textContent=count("subject");
+ document.getElementById("chapters").textContent=count("chapter");
+ const r=questions.slice().sort((a,b)=>(b.createdAt||"").localeCompare(a.createdAt||"")).slice(0,5);
+ document.getElementById("recent").innerHTML=r.length?`<div class="table-wrap"><table><tr><th>Board / Class</th><th>Subject / Chapter</th><th>Question</th><th>Marks</th></tr>${r.map(q=>`<tr><td>${esc(q.board)}<br>${esc(q.className)}</td><td>${esc(q.subject)}<br>${esc(q.chapter)}</td><td>${esc(q.text)}</td><td>${esc(q.marks)}</td></tr>`).join("")}</table></div>`:'<div class="empty"><div>📚</div>No questions yet. Start by adding your first question.</div>';
 }
-
-function renderChoices() {
-    paperQuestionChoices.innerHTML = data.questions.length
-        ? data.questions.map((q, i) => `
-            <label>
-                <input type="checkbox" class="questionPick" value="${i}"
-                       style="width:auto">
-                ${escapeHTML(q.text)}
-                (${escapeHTML(q.marks)} marks)
-            </label>
-        `).join("<hr>")
-        : '<p class="small">Add questions to the Question Bank first.</p>';
+function resetForm(){
+ editingId=null;
+ ["qBoard","qClass","qSubject","qMedium","qChapter","qMarks","qType","qDifficulty"].forEach(id=>document.getElementById(id).value="");
+ ["qSource","qPage","qText","qAnswer"].forEach(id=>document.getElementById(id).value="");
+ document.getElementById("formTitle").textContent="Add a New Question";
+ document.getElementById("saveQBtn").textContent="💾 Save Question";
 }
-
-function buildPaper() {
-    const source = pSource.value;
-    let selected = [];
-
-    if (source !== "ai") {
-        document.querySelectorAll(".questionPick:checked")
-            .forEach(input => {
-                const q = data.questions[Number(input.value)];
-                if (q) selected.push({
-                    text: q.text,
-                    marks: q.marks,
-                    answer: q.answer,
-                    origin: "Question Bank"
-                });
-            });
-    }
-
-    if (source === "ai" || source === "both") {
-        aiQuestions.value.split("\n")
-            .map(x => x.trim())
-            .filter(Boolean)
-            .forEach(text => selected.push({
-                text,
-                marks: 1,
-                answer: "",
-                origin: "AI-generated"
-            }));
-    }
-
-    if (!selected.length) {
-        alert("Select bank questions or enter AI-generated questions.");
-        return;
-    }
-
-    const paper = {
-        id: Date.now(),
-        title: pTitle.value.trim(),
-        board: pBoard.value.trim(),
-        cls: pClass.value.trim(),
-        subject: pSubject.value.trim(),
-        medium: pMedium.value.trim(),
-        exam: pExam.value.trim(),
-        marks: Number(pMarks.value),
-        duration: pDuration.value.trim(),
-        syllabus: pSyllabus.value.trim(),
-        pattern: pPattern.value.trim(),
-        source,
-        questions: selected,
-        date: today()
-    };
-
-    const questionMarks = selected.reduce(
-        (sum, q) => sum + Number(q.marks || 0), 0
-    );
-
-    if (questionMarks !== paper.marks) {
-        if (!confirm(
-            "The selected questions total " + questionMarks +
-            " marks, but the paper is set to " + paper.marks +
-            " marks. Save anyway?"
-        )) return;
-    }
-
-    data.papers.push(paper);
-    save();
-    displayPreview(paper);
-    alert("Paper saved. Open Saved Papers to download it.");
+function saveQuestion(){
+ const board=document.getElementById("qBoard").value;
+ const className=document.getElementById("qClass").value;
+ const subject=document.getElementById("qSubject").value;
+ const medium=document.getElementById("qMedium").value;
+ const chapter=document.getElementById("qChapter").value;
+ const marks=document.getElementById("qMarks").value;
+ const type=document.getElementById("qType").value;
+ const text=document.getElementById("qText").value.trim();
+ if(!board||!className||!subject||!medium||!chapter||!marks||!type||!text){alert("Please complete all required fields and the question text.");return}
+ const old=questions.find(q=>q.id===editingId);
+ const q={id:editingId||"Q"+Date.now()+Math.random().toString(16).slice(2,6),board,className,subject,medium,chapter,marks,type,difficulty:document.getElementById("qDifficulty").value||"Medium",source:document.getElementById("qSource").value.trim(),page:document.getElementById("qPage").value.trim(),text,answer:document.getElementById("qAnswer").value.trim(),createdAt:old?.createdAt||new Date().toISOString(),createdDate:old?.createdDate||today(),updatedAt:new Date().toISOString()};
+ if(old)questions=questions.map(x=>x.id===editingId?q:x);else questions.push(q);
+ persist();resetForm();refresh();renderBank();alert(old?"Question updated.":"Question saved.");
 }
-
-function displayPreview(p) {
-    preview.innerHTML = `
-        <div class="card" id="paperOutput">
-            <h2 style="text-align:center">
-                ${escapeHTML(p.board)}
-            </h2>
-            <h2 style="text-align:center">
-                ${escapeHTML(p.title)}
-            </h2>
-            <p style="text-align:center">
-                Class: ${escapeHTML(p.cls)} |
-                Subject: ${escapeHTML(p.subject)}
-            </p>
-            <p style="text-align:center">
-                Duration: ${escapeHTML(p.duration)} |
-                Maximum Marks: ${escapeHTML(p.marks)}
-            </p>
-            <hr>
-            <p><strong>Syllabus:</strong>
-                ${escapeHTML(p.syllabus)}</p>
-            <p><strong>Paper Pattern:</strong><br>
-                ${escapeHTML(p.pattern).replace(/\n/g, "<br>")}
-            </p>
-            <ol>
-                ${p.questions.map(q => `
-                    <li style="margin-bottom:12px">
-                        ${escapeHTML(q.text)}
-                        [${escapeHTML(q.marks)} marks]
-                        <span class="small">
-                            — ${escapeHTML(q.origin)}
-                        </span>
-                    </li>
-                `).join("")}
-            </ol>
-            <button onclick="downloadWord(${p.id})">
-                Download Word File
-            </button>
-        </div>
-    `;
-
-    preview.scrollIntoView({ behavior: "smooth" });
+function editQuestion(id){
+ const q=questions.find(x=>x.id===id);if(!q)return;
+ editingId=id;
+ const fields={qBoard:q.board,qClass:q.className,qSubject:q.subject,qMedium:q.medium,qChapter:q.chapter,qMarks:String(q.marks),qType:q.type,qDifficulty:q.difficulty||"Medium",qSource:q.source,qPage:q.page,qText:q.text,qAnswer:q.answer};
+ for(const [id,v] of Object.entries(fields)){
+  const el=document.getElementById(id);
+  if(v&&!Array.from(el.options||[]).some(o=>o.value===v)){const opt=document.createElement("option");opt.value=v;opt.textContent=v;el.appendChild(opt)}
+  el.value=v||"";
+ }
+ document.getElementById("formTitle").textContent="Edit Question";
+ document.getElementById("saveQBtn").textContent="Update Question";
+ window.scrollTo({top:0,behavior:"smooth"});
 }
-
-function downloadWord(id) {
-    const p = data.papers.find(x => x.id === id);
-    if (!p) return;
-
-    const content = `
-        <html>
-        <head><meta charset="utf-8"></head>
-        <body>
-            <h2 align="center">${escapeHTML(p.board)}</h2>
-            <h2 align="center">${escapeHTML(p.title)}</h2>
-            <p>Class: ${escapeHTML(p.cls)} |
-               Subject: ${escapeHTML(p.subject)}</p>
-            <p>Maximum Marks: ${escapeHTML(p.marks)} |
-               Duration: ${escapeHTML(p.duration)}</p>
-            <p>Paper Pattern:<br>
-               ${escapeHTML(p.pattern).replace(/\n/g, "<br>")}</p>
-            <ol>
-                ${p.questions.map(q => `
-                    <li>${escapeHTML(q.text)}
-                    [${escapeHTML(q.marks)} marks]</li>
-                `).join("")}
-            </ol>
-        </body>
-        </html>`;
-
-    const blob = new Blob(["\ufeff", content], {
-        type: "application/msword"
-    });
-
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = p.title.replace(/[^a-z0-9]/gi, "_") + ".doc";
-    a.click();
-    URL.revokeObjectURL(a.href);
+function deleteQuestion(id){if(!confirm("Delete this question?"))return;questions=questions.filter(q=>q.id!==id);selected.delete(id);persist();refresh();renderBank();renderMaker()}
+function filtersInit(){
+ dropdownFilter("fBoard","board","All Boards",questions.map(q=>q.board));
+ dropdownFilter("fClass","className","All Classes",questions.map(q=>q.className));
+ dropdownFilter("fSubject","subject","All Subjects",questions.map(q=>q.subject));
+ dropdownFilter("fChapter","chapter","All Chapters",questions.map(q=>q.chapter));
+ dropdownFilter("fMedium","medium","All Mediums",uniq([...options.medium,...questions.map(q=>q.medium)]));
 }
-
-function renderPapers() {
-    paperList.innerHTML = data.papers.length
-        ? data.papers.slice().reverse().map(p => `
-            <div class="item">
-                <strong>${escapeHTML(p.title)}</strong>
-                <p class="small">
-                    Class ${escapeHTML(p.cls)} |
-                    ${escapeHTML(p.subject)} |
-                    ${escapeHTML(p.marks)} marks
-                </p>
-                <button onclick="downloadWord(${p.id})">
-                    Download Word
-                </button>
-            </div>
-        `).join("")
-        : '<p class="small">No papers saved yet.</p>';
+function filteredBank(){
+ const b=document.getElementById("fBoard").value,c=document.getElementById("fClass").value,s=document.getElementById("fSubject").value,ch=document.getElementById("fChapter").value,m=document.getElementById("fMedium").value,search=document.getElementById("fSearch").value.toLowerCase().trim();
+ return questions.filter(q=>(!b||q.board===b)&&(!c||q.className===c)&&(!s||q.subject===s)&&(!ch||q.chapter===ch)&&(!m||q.medium===m)&&(!search||[q.text,q.answer,q.chapter,q.subject,q.board].some(v=>String(v||"").toLowerCase().includes(search))));
 }
-
-document.getElementById("customerForm").onsubmit = function(e) {
-    e.preventDefault();
-
-    data.customers.push({
-        name: cName.value.trim(),
-        person: cPerson.value.trim(),
-        phone: cPhone.value.trim(),
-        email: cEmail.value.trim()
-    });
-
-    this.reset();
-    save();
-    alert("Customer saved.");
-};
-
-function renderCustomers() {
-    customerList.innerHTML = data.customers.map(c => `
-        <div class="item">
-            <strong>${escapeHTML(c.name)}</strong>
-            <p>${escapeHTML(c.person)} |
-               ${escapeHTML(c.phone)}</p>
-            <p class="small">${escapeHTML(c.email)}</p>
-        </div>
-    `).join("") || '<p class="small">No customers saved yet.</p>';
+function renderBank(){
+ filtersInit();const list=filteredBank();
+ document.getElementById("bankCount").textContent=`Showing ${list.length} of ${questions.length} questions`;
+ document.getElementById("bankTable").innerHTML=list.length?`<div class="table-wrap"><table><tr><th>Board / Class / Medium</th><th>Subject / Chapter</th><th>Question / Type</th><th>Marks</th><th>Actions</th></tr>${list.map(q=>`<tr><td>${esc(q.board)}<br>${esc(q.className)}<br><span class="badge">${esc(q.medium)}</span></td><td>${esc(q.subject)}<br>${esc(q.chapter)}</td><td>${esc(q.text)}<br><span class="small-note">${esc(q.type)}${q.source?" · "+esc(q.source):""}</span></td><td>${esc(q.marks)}</td><td><div class="actions"><button class="btn secondary small" onclick="editQuestion('${q.id}')">Edit</button><button class="btn danger small" onclick="deleteQuestion('${q.id}')">Delete</button></div></td></tr>`).join("")}</table></div>`:'<div class="empty"><div>🔎</div>No matching questions found.</div>';
 }
-
-document.getElementById("orderForm").onsubmit = function(e) {
-    e.preventDefault();
-
-    data.orders.push({
-        customer: oCustomer.value.trim(),
-        details: oDetails.value.trim(),
-        amount: Number(oAmount.value),
-        status: oStatus.value,
-        date: today()
-    });
-
-    this.reset();
-    save();
-    alert("Order saved.");
-};
-
-function renderOrders() {
-    orderList.innerHTML = data.orders.map(o => `
-        <div class="item">
-            <strong>${escapeHTML(o.customer)}</strong>
-            <p>${escapeHTML(o.details)}</p>
-            <p>Amount: ₹${escapeHTML(o.amount)}</p>
-            <p>Payment: ${escapeHTML(o.status)}</p>
-        </div>
-    `).join("") || '<p class="small">No orders saved yet.</p>';
+function getFilteredMaker(){
+ const b=document.getElementById("pBoard").value,c=document.getElementById("pClass").value,s=document.getElementById("pSubject").value,m=document.getElementById("pMedium").value,ch=document.getElementById("pChapter").value;
+ return questions.filter(q=>(!b||q.board===b)&&(!c||q.className===c)&&(!s||q.subject===s)&&(!m||q.medium===m)&&(!ch||q.chapter===ch));
 }
-
-function renderAll() {
-    renderDashboard();
-    renderQuestions();
-    renderChoices();
-    renderPapers();
-    renderCustomers();
-    renderOrders();
+function populateMaker(){
+ dropdownFilter("pBoard","board","All Boards",questions.map(q=>q.board));
+ dropdownFilter("pClass","className","All Classes",questions.map(q=>q.className));
+ dropdownFilter("pSubject","subject","All Subjects",questions.map(q=>q.subject));
+ dropdownFilter("pMedium","medium","All Mediums",uniq([...options.medium,...questions.map(q=>q.medium)]));
+ dropdown("pType","paperType","Select Paper Type");
+ updateChapterFilter();
 }
-
-renderAll();
+function updateChapterFilter(){dropdownFilter("pChapter","chapter","All Chapters",getFilteredMaker().map(q=>q.chapter))}
+function makerBoardChanged(){updateMakerCascade("board")}
+function makerClassChanged(){updateMakerCascade("className")}
+function makerSubjectChanged(){updateMakerCascade("subject")}
+function updateMakerCascade(changed){
+ const b=document.getElementById("pBoard").value,c=document.getElementById("pClass").value,s=document.getElementById("pSubject").value;
+ const base=questions.filter(q=>(!b||q.board===b)&&(!c||q.className===c)&&(!s||q.subject===s));
+ if(changed==="board"){
+  dropdownFilter("pClass","className","All Classes",base.map(q=>q.className));
+  dropdownFilter("pSubject","subject","All Subjects",base.map(q=>q.subject));
+ }else if(changed==="className"){
+  dropdownFilter("pSubject","subject","All Subjects",base.map(q=>q.subject));
+ }
+ updateChapterFilter();renderMaker();
+}
+function renderMaker(){
+ const list=getFilteredMaker();
+ document.getElementById("makerCount").textContent=`${list.length} questions available · ${selected.size} selected`;
+ document.getElementById("makerQuestions").innerHTML=list.length?list.map(q=>`<div class="checkrow"><input type="checkbox" id="s_${q.id}" ${selected.has(q.id)?"checked":""} onchange="toggleSelect('${q.id}',this.checked)"><label for="s_${q.id}"><b>${esc(q.chapter)} · ${esc(q.marks)} marks</b><br>${esc(q.text)}<br><span class="small-note">${esc(q.board)} · ${esc(q.className)} · ${esc(q.subject)} · ${esc(q.type)}</span></label></div>`).join(""):'<div class="empty">No questions match the selected filters. Add questions to your bank first.</div>';
+}
+function toggleSelect(id,on){on?selected.add(id):selected.delete(id);renderMaker()}
+function selectVisible(on){getFilteredMaker().forEach(q=>on?selected.add(q.id):selected.delete(q.id));renderMaker()}
+function selectedQs(){return [...selected].map(id=>questions.find(q=>q.id===id)).filter(Boolean)}
+function currentPaper(){
+ const qs=selectedQs();
+ return {id:"P"+Date.now()+Math.random().toString(16).slice(2,6),title:document.getElementById("pTitle").value.trim()||"Question Paper",type:document.getElementById("pType").value,board:document.getElementById("pBoard").value,className:document.getElementById("pClass").value,subject:document.getElementById("pSubject").value,medium:document.getElementById("pMedium").value,chapter:document.getElementById("pChapter").value,maxMarks:document.getElementById("pMax").value||qs.reduce((s,q)=>s+Number(q.marks||0),0),duration:document.getElementById("pDuration").value.trim(),instructions:document.getElementById("pInstructions").value.trim(),questions:qs.map(q=>({...q})),createdAt:new Date().toISOString(),createdDate:today()};
+}
+function paperHtml(p){
+ return `<div class="preview"><h3>${esc(p.title)}</h3><h4>${esc(p.board)} · ${esc(p.className)} · ${esc(p.subject)}</h4><p style="text-align:center">${esc(p.type)} · ${esc(p.medium)}</p><p><b>Maximum Marks:</b> ${esc(p.maxMarks)} &nbsp; <b>Duration:</b> ${esc(p.duration||"Not specified")}</p><hr><p><b>Instructions:</b> ${esc(p.instructions||"Read all questions carefully.")}</p>${p.questions.map((q,i)=>`<div class="paperq"><b>Q.${i+1}. (${esc(q.marks)} marks)</b> ${esc(q.text)}</div>`).join("")}</div>`;
+}
+function previewPaper(){const qs=selectedQs();if(!qs.length){alert("Select at least one question.");return}document.getElementById("preview").innerHTML=paperHtml(currentPaper());document.getElementById("preview").scrollIntoView({behavior:"smooth"})}
+function savePaper(){const qs=selectedQs();if(!qs.length){alert("Select at least one question.");return}papers.push(currentPaper());persist();refresh();alert("Paper saved successfully.");go("saved")}
+function word(s){return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/\n/g,"<br>")}
+function downloadWord(p){
+ if(!p||!p.questions?.length){alert("No questions to download.");return}
+ const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:Arial;font-size:12pt}h2,h3{text-align:center}p{line-height:1.5}</style></head><body><h2>${word(p.title)}</h2><h3>${word(p.board)} · ${word(p.className)} · ${word(p.subject)}</h3><p>${word(p.type)} · ${word(p.medium)}</p><p><b>Maximum Marks:</b> ${word(p.maxMarks)} &nbsp; <b>Duration:</b> ${word(p.duration||"Not specified")}</p><p><b>Instructions:</b> ${word(p.instructions||"Read all questions carefully.")}</p><hr>${p.questions.map((q,i)=>`<p><b>Q.${i+1}. (${word(q.marks)} marks)</b> ${word(q.text)}</p>`).join("")}</body></html>`;
+ dl((p.title||"Question-Paper").replace(/[^\w-]+/g,"_")+".doc",html,"application/msword");
+}
+function downloadCurrentWord(){downloadWord(currentPaper())}
+function answerHtml(p){
+ return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:Arial;font-size:12pt}h2,h3{text-align:center}p{line-height:1.5}</style></head><body><h2>Model Answer / Answer Key</h2><h3>${word(p.title)}</h3><p><b>Board:</b> ${word(p.board)} &nbsp; <b>Class:</b> ${word(p.className)} &nbsp; <b>Subject:</b> ${word(p.subject)}</p>${p.questions.map((q,i)=>`<p><b>Q.${i+1}. ${word(q.text)}</b><br><b>Answer:</b> ${word(q.answer||"Answer not entered in the question bank.")}</p>`).join("")}</body></html>`;
+}
+function downloadAnswerKey(){
+ const qs=selectedQs();if(!qs.length){alert("Select questions first.");return}
+ const p=currentPaper();dl("Model-Answer-Key.doc",answerHtml(p),"application/msword");
+}
+function renderSaved(){
+ document.getElementById("savedList").innerHTML=papers.length?`<div class="table-wrap"><table><tr><th>Paper</th><th>Details</th><th>Questions</th><th>Date</th><th>Actions</th></tr>${papers.slice().reverse().map(p=>`<tr><td><b>${esc(p.title)}</b><br>${esc(p.type)}</td><td>${esc(p.board)}<br>${esc(p.className)} · ${esc(p.subject)}</td><td>${p.questions.length}<br>${esc(p.maxMarks)} marks</td><td>${esc(p.createdDate)}</td><td><div class="actions"><button class="btn secondary small" onclick="viewSaved('${p.id}')">View</button><button class="btn green small" onclick="downloadSaved('${p.id}')">Word</button><button class="btn danger small" onclick="deletePaper('${p.id}')">Delete</button></div></td></tr>`).join("")}</table></div>`:'<div class="empty"><div>📄</div>No saved papers yet.</div>';
+}
+function viewSaved(id){const p=papers.find(x=>x.id===id);if(p)document.getElementById("savedPreview").innerHTML=paperHtml(p)}
+function downloadSaved(id){const p=papers.find(x=>x.id===id);if(p)downloadWord(p)}
+function deletePaper(id){if(!confirm("Delete this saved paper?"))return;papers=papers.filter(p=>p.id!==id);persist();refresh();renderSaved()}
+function populateListTypes(){
+ const el=document.getElementById("listType"),old=el.value;
+ el.innerHTML=Object.keys(LIST_LABELS).map(k=>`<option value="${k}">${LIST_LABELS[k]}</option>`).join("");
+ if(LIST_LABELS[old])el.value=old;
+}
+function renderOptionList(){
+ const key=document.getElementById("listType").value;
+ document.getElementById("optionList").innerHTML=(options[key]||[]).map(v=>`<div class="checkrow"><label>${esc(v)}</label><button class="btn danger small" onclick="removeOption('${key}',${JSON.stringify(v).replace(/"/g,"&quot;")})">Remove</button></div>`).join("")||'<p class="small-note">No options yet.</p>';
+}
+function addOption(){
+ const key=document.getElementById("listType").value,v=document.getElementById("newOption").value.trim();
+ if(!v){alert("Enter an option first.");return}
+ if(options[key].some(x=>x.toLowerCase()===v.toLowerCase())){alert("This option already exists.");return}
+ options[key].push(v);document.getElementById("newOption").value="";persist();initDropdowns();refresh();renderOptionList();alert("New option added.");
+}
+function removeOption(key,value){
+ if(options[key].length<=1){alert("Keep at least one option.");return}
+ if(!confirm("Remove this option from the dropdown list? Existing saved questions are not changed."))return;
+ options[key]=options[key].filter(x=>x!==value);persist();initDropdowns();refresh();renderOptionList();
+}
+function csvCell(v){return '"'+String(v??"").replace(/"/g,'""')+'"'}
+function exportCSV(){
+ const heads=["Board","Class","Subject","Medium","Chapter","Marks","Type","Question","Answer","Source","Page","Difficulty","CreatedDate"];
+ const rows=questions.map(q=>[q.board,q.className,q.subject,q.medium,q.chapter,q.marks,q.type,q.text,q.answer,q.source,q.page,q.difficulty,q.createdDate]);
+ dl("question-bank.csv",[heads,...rows].map(r=>r.map(csvCell).join(",")).join("\r\n"),"text/csv;charset=utf-8");
+}
+function parseCSV(text){
+ const rows=[];let row=[],cell="",quoted=false;
+ for(let i=0;i<text.length;i++){const c=text[i];if(quoted){if(c==='"'&&text[i+1]==='"'){cell+='"';i++}else if(c==='"')quoted=false;else cell+=c}else if(c==='"')quoted=true;else if(c===","){row.push(cell);cell=""}else if(c==="\n"){row.push(cell.replace(/\r$/,""));rows.push(row);row=[];cell=""}else cell+=c}
+ if(cell.length||row.length){row.push(cell.replace(/\r$/,""));rows.push(row)}
+ return rows;
+}
+async function importCSV(){
+ const file=document.getElementById("csvFile").files[0];if(!file){alert("Choose a CSV file first.");return}
+ const rows=parseCSV(await file.text());if(rows.length<2){alert("No data rows found.");return}
+ const h=rows[0].map(x=>x.trim().toLowerCase());
+ const col=(...names)=>h.findIndex(x=>names.includes(x));
+ const ix={board:col("board"),className:col("class","class name","standard"),subject:col("subject"),medium:col("medium"),chapter:col("chapter","lesson"),marks:col("marks","mark"),type:col("type","question type"),text:col("question","question text"),answer:col("answer","model answer"),source:col("source","textbook"),page:col("page","page number"),difficulty:col("difficulty")};
+ if(["board","className","subject","chapter","text"].some(k=>ix[k]<0)){alert("Required CSV columns: Board, Class, Subject, Chapter, Question.");return}
+ let count=0;
+ for(const r of rows.slice(1)){
+  const g=k=>ix[k]>=0?String(r[ix[k]]||"").trim():"";
+  if(!g("board")||!g("className")||!g("subject")||!g("chapter")||!g("text"))continue;
+  const q={id:"Q"+Date.now()+Math.random().toString(16).slice(2,7),board:g("board"),className:g("className"),subject:g("subject"),medium:g("medium")||"English",chapter:g("chapter"),marks:g("marks")||"1",type:g("type")||"Short Answer",text:g("text"),answer:g("answer"),source:g("source"),page:g("page"),difficulty:g("difficulty")||"Medium",createdAt:new Date().toISOString(),createdDate:today()};
+  questions.push(q);count++;
+  for(const [k,v] of Object.entries({board:q.board,className:q.className,subject:q.subject,medium:q.medium,chapter:q.chapter,marks:String(q.marks),questionType:q.type,difficulty:q.difficulty}))if(!options[k].includes(v))options[k].push(v);
+ }
+ persist();initDropdowns();refresh();alert(`Imported ${count} questions.`);
+}
+function backup(){dl("paper-management-backup.json",JSON.stringify({questions,papers,options},null,2),"application/json")}
+function restore(event){
+ const file=event.target.files[0];if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{const d=JSON.parse(reader.result);if(!Array.isArray(d.questions)||!Array.isArray(d.papers))throw Error();if(!confirm("Replace current browser data with this backup?"))return;questions=d.questions;papers=d.papers;if(d.options)options=d.options;persist();initDropdowns();refresh();alert("Backup restored successfully.")}catch(e){alert("Invalid backup file.")}
+ };
+ reader.readAsText(file);
+}
+function clearData(){
+ if(!confirm("Delete all questions, saved papers and custom dropdown options from this browser? Download a backup first if needed."))return;
+ questions=[];papers=[];selected.clear();options=JSON.parse(JSON.stringify(DEFAULTS));persist();resetForm();initDropdowns();refresh();alert("Local data cleared.");
+}
+function refresh(){dashboard();filtersInit();renderBank();populateMaker();renderMaker();renderSaved()}
+navBuild();initDropdowns();populateListTypes();refresh();
 </script>
-
 </body>
 </html>
